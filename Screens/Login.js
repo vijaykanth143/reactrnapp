@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import * as eva from '@eva-design/eva';
 import {
@@ -28,6 +29,7 @@ const Login = () => {
   const [Password, setPassword] = useState('');
   const navigation = useNavigation();
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const auth = getAuth();
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
@@ -38,22 +40,20 @@ const Login = () => {
       </View>
     </TouchableWithoutFeedback>
   );
-  const renderCaption = () => {
-    return (
-      <View style={styles.captionContainer}>
-        {AlertIcon(styles.captionIcon)}
-        <Text style={styles.captionText}>
-          Should contain at least 8 symbols
-        </Text>
-      </View>
-    );
-  };
+
   const handleSubmit = () => {
     if (
       value.indexOf('@spinebiz.com', value.length - '@spinebiz.com'.length) !==
       -1
     ) {
-      navigation.navigate('Home');
+      signInWithEmailAndPassword(auth, value, Password)
+        .then(response => {
+          navigation.navigate('Home');
+          console.log(response.user);
+        })
+        .catch(error => {
+          Alert.alert(error.message);
+        });
     } else if (value == '') {
       Alert.alert('Invalid email!', 'Plz enter a valid Email', [
         {text: 'Okay', style: 'destructive'},
@@ -89,7 +89,6 @@ const Login = () => {
               onSubmitEditing={Keyboard.dismiss}
               value={Password}
               color="black"
-              caption={renderCaption}
               accessoryRight={renderIcon}
               onChangeText={nextValue => setPassword(nextValue)}
               secureTextEntry={secureTextEntry}
@@ -103,6 +102,7 @@ const Login = () => {
             style={{marginBottom: 10}}>
             Login
           </Button>
+          <Text style={{fontSize: 13}}>Don't have an account,then</Text>
           <TouchableOpacity>
             <Text
               status="primary"

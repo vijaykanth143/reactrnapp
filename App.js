@@ -15,11 +15,22 @@ import {
 } from 'react-native';
 import Login from './Screens/Login';
 import Register from './Screens/Register';
+import {initializeApp} from 'firebase/app';
 import {ApplicationProvider} from '@ui-kitten/components';
 import {tapHandlerName} from 'react-native-gesture-handler/lib/typescript/handlers/TapGestureHandler';
 import Home from './Screens/Home';
+import Welcome from './Screens/Welcome';
 
 const App = () => {
+  const firebaseConfig = {
+    apiKey: 'AIzaSyBGIBRQWzEpnOp1uqlaNe_xG-l36aUcLj8',
+    authDomain: 'chatapp-rn-31124.firebaseapp.com',
+    projectId: 'chatapp-rn-31124',
+    storageBucket: 'chatapp-rn-31124.appspot.com',
+    messagingSenderId: '840733300909',
+    appId: '1:840733300909:web:274007c72ab8e295dece24',
+  };
+  initializeApp(firebaseConfig);
   const Stack = createStackNavigator();
   return (
     <>
@@ -30,6 +41,7 @@ const App = () => {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignUp" component={Register} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Welcome" component={Welcome} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
