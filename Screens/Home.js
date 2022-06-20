@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {RNCamera} from 'react-native-camera';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Keyboard,
@@ -11,9 +11,16 @@ import {
   Alert,
   Text,
   BackHandler,
+  Image,
 } from 'react-native';
-const Home = () => {
+import Camera from './Camera';
+const Home = ({route}) => {
+  const img = route.params;
+  console.log('.....................................................');
+  console.log(img);
+  console.log('.....................................................');
   const navigation = useNavigation();
+  const [camera, setShowCamera] = useState(false);
   const backAction = () => {
     Alert.alert('Hold on!', 'Are you sure you want to go back?', [
       {
@@ -21,7 +28,7 @@ const Home = () => {
         onPress: () => null,
         style: 'cancel',
       },
-      {text: 'YES', onPress: () => BackHandler.exitApp()},
+      {text: 'YES', onPress: () => navigation.goBack()},
     ]);
     return true;
   };
@@ -31,24 +38,14 @@ const Home = () => {
     backAction,
   );
   return (
-    <View style={styles.background}>
-      <Text style={styles.text}>Home Screen</Text>
-      <Button title="Signup" onPress={() => navigation.navigate('SignUp')} />
-      <RNCamera
-        ref={ref => {
-          c amera = ref;
-        }}
-        captureAudio={false}
-        style={{flex: 1}}
-        type={RNCamera.Constants.Type.back}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-      />
-    </View>
+    <>
+      <View style={styles.background}>
+        <Text style={styles.text}>Home Screen</Text>
+        <Button title="Signup" onPress={() => navigation.navigate('SignUp')} />
+        <Button title="camera" onPress={() => navigation.navigate('Camera')} />
+      
+      </View>
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -60,6 +57,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 30,
+    color: 'black',
   },
 });
 export default Home;

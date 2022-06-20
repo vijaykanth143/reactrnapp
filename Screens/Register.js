@@ -70,10 +70,7 @@ const Register = () => {
     );
   };
   const handleSubmit = () => {
-    if (
-      value.indexOf('@spinebiz.com', value.length - '@spinebiz.com'.length) !==
-      -1
-    ) {
+    if (value.indexOf('@spinebiz.com') !== -1) {
       console.log(value);
     } else if (value == '') {
       Alert.alert('Invalid email!', 'Plz enter a valid Email', [

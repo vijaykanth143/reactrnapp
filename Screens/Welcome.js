@@ -11,9 +11,14 @@ import {
   Alert,
   Text,
   BackHandler,
+  Image,
 } from 'react-native';
 const Welcome = ({route}) => {
+  const img = route.params;
   const {name} = route.params;
+  console.log('..............................................................');
+  console.log(img);
+  console.log('..............................................................');
   const navigation = useNavigation();
   const backAction = () => {
     Alert.alert('Hold on!', 'Are you sure you want to go back?', [
@@ -31,11 +36,16 @@ const Welcome = ({route}) => {
     'hardwareBackPress',
     backAction,
   );
+
   return (
-    <View style={styles.background}>
-      <Text style={styles.text}>Welcome {name}</Text>
-      <Button title="Login" onPress={() => navigation.navigate('Login')} />
-    </View>
+    <>
+      <View style={styles.background}>
+        <Text style={styles.text}>Welcome {name}</Text>
+
+        <Button title="Login" onPress={() => navigation.navigate('Login')} />
+      </View>
+      <Image source={{uri: img.uri}} style={{flex: 1}} />
+    </>
   );
 };
 const styles = StyleSheet.create({

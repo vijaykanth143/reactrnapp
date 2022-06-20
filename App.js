@@ -20,6 +20,7 @@ import {ApplicationProvider} from '@ui-kitten/components';
 import {tapHandlerName} from 'react-native-gesture-handler/lib/typescript/handlers/TapGestureHandler';
 import Home from './Screens/Home';
 import Welcome from './Screens/Welcome';
+import Camera from './Screens/Camera';
 
 const App = () => {
   const firebaseConfig = {
@@ -42,6 +43,7 @@ const App = () => {
           <Stack.Screen name="SignUp" component={Register} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Welcome" component={Welcome} />
+          <Stack.Screen name="Camera" component={Camera} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
